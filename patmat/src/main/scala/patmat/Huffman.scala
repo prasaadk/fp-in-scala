@@ -157,8 +157,9 @@ object Huffman {
         subtree match {
           case Leaf(char, _)           if (bits.isEmpty)   => List(char)
           case Leaf(char, _)                               => char :: walk(tree, bits)
-          case Fork(left, right, _, _) if (bits.head == 0) => walk(left, bits.tail)
-          case Fork(left, right, _, _)                     => walk(right, bits.tail)
+          case Fork(left, _, _, _) if (bits.head == 0) => walk(left, bits.tail)
+          case Fork(_, right, _, _)                     => walk(right, bits.tail)
+          case _ => List()
         }
       }
       walk(tree, bits)
@@ -195,6 +196,7 @@ object Huffman {
           case Leaf(char, _) => List()
           case Fork(left, _, _, _) if chars(left).contains(char) => 0 :: encodeChar(left)(char)
           case Fork(_, right, _, _) => 1 :: encodeChar(right)(char)
+          case _ => List()
         }
       }
       text.flatMap(encodeChar(tree))
