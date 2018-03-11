@@ -92,15 +92,35 @@ class HuffmanSuite extends FunSuite {
   }
 
   test("decode secret") {
-    println (decodedSecret)
-    println (encode(frenchCode)("huffmanestcool".toList))
     assert (decode(frenchCode, encode(frenchCode)("huffmanestcool".toList)) === "huffmanestcool".toList)
   }
-
 
   test("decode and encode a very short text should be identity") {
     new TestTrees {
       assert(decode(t1, encode(t1)("ab".toList)) === "ab".toList)
+    }
+  }
+
+  test("code bits with char first in codetable") {
+    val table: CodeTable = List(('a',List(0,1,1)),('b',List(1,1,1)))
+    assert (codeBits(table)('a') == List(0,1,1))
+  }
+
+  test("code bits with char last in codetable") {
+    val table: CodeTable = List(('a',List(0,1,1)),('b',List(1,1,1)))
+    assert (codeBits(table)('b') == List(1,1,1))
+  }
+
+  test("code table with char last in codetable") {
+    new TestTrees {
+      val table: CodeTable = List(('a', List(0, 0)), ('b', List(0, 1)), ('d', List(1)))
+      assert (convert(t2) == table)
+    }
+  }
+
+  test("decode and quickEncode a very short text should be identity") {
+    new TestTrees {
+      assert(decode(t1, quickEncode(t1)("ab".toList)) === "ab".toList)
     }
   }
 
