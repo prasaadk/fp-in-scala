@@ -133,7 +133,7 @@ object Huffman {
    */
     def until(condition: List[CodeTree] => Boolean, operation: List[CodeTree] => List[CodeTree])
              (trees: List[CodeTree]): CodeTree =
-      if (condition (trees) == true) trees.head else until (condition, operation) (operation(trees))
+      if (condition (trees)) trees.head else until (condition, operation) (operation(trees))
   
   /**
    * This function creates a code tree which is optimal to encode the text `chars`.
@@ -173,7 +173,7 @@ object Huffman {
 
   /**
    * What does the secret message say? Can you decode it?
-   * For the decoding use the `frenchCode' Huffman tree defined above.
+   * For the decoding use the `frenchCode` Huffman tree defined above.
    */
   val secret: List[Bit] = List(0,0,1,1,1,0,1,0,1,1,1,0,0,1,1,0,1,0,0,1,1,0,1,0,1,1,0,0,1,1,1,1,1,0,1,0,1,1,0,0,0,0,1,0,1,1,1,0,0,1,0,0,1,0,0,0,1,0,0,0,1,0,1)
 
